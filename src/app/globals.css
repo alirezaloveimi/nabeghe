@@ -1,0 +1,149 @@
+@import "highlight.js/styles/atom-one-dark.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Kalameh";
+  src: url("/fonts/Kalameh-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kalameh";
+  src: url("/fonts/KalamehWeb-Regular.woff2") format("woff2"),
+    url("/fonts/Kalameh-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kalameh";
+  src: url("/fonts/KalamehWeb-Bold.woff2") format("woff2"),
+    url("/fonts/Kalameh-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kalameh";
+  src: url("/fonts/KalamehWeb-Black.woff2") format("woff2"),
+    url("/fonts/Kalameh-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --primary: 224.3 76.3% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 215 13.8% 34.1%;
+
+    --border: 240 5.9% 90%;
+    --input: 214.3 31.8% 91.4%;
+
+    --toastify-font-family: "Kalameh", "sans-serif";
+    --toastify-toast-width: 250px;
+    --toastify-toast-min-height: 50px;
+    --toastify-toast-padding: 8px;
+    --toastify-toast-bd-radius: 12px;
+
+    --toastify-color-light: hsl(var(--background));
+    --toastify-text-color-light: hsl(var(--foreground));
+  }
+
+  [data-theme="dark"] {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --primary: 224.3 76.3% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 10% 10%;
+    --secondary-foreground: 240 4.8% 95.9%;
+
+    --muted: 220 8.9% 46.1%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 217.2 32.6% 17.5%;
+
+    --toastify-color-dark: hsl(var(--background));
+    --toastify-text-color-dark: hsl(var(--foreground));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html,
+  body {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Kalameh", "sans-serif";
+    @apply bg-background text-foreground overflow-x-hidden;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+
+  button,
+  input,
+  textarea {
+    @apply outline-none disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+  }
+  input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  input[type="color"]::-webkit-color-swatch {
+    border: none;
+  }
+}
+
+@layer utilities {
+  .dir-ltr {
+    direction: ltr;
+  }
+  .flex-align-center {
+    @apply flex items-center;
+  }
+  .flex-between-center {
+    @apply flex justify-between items-center;
+  }
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .grid-center {
+    @apply grid place-content-center;
+  }
+  .transition-ease {
+    @apply transition ease-[ease];
+  }
+}
+
+@layer components {
+  .container {
+    @apply w-full sm:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1140px] 2xl:w-[1320px];
+  }
+
+  #button-group > button {
+    @apply outline-none size-10 grid-center text-lg rounded-xl;
+  }
+}
