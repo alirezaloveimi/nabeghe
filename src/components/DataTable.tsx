@@ -7,15 +7,17 @@ type Column<T> = {
 type DataTableProps<T> = {
   data: T[];
   columns: Column<T>[];
+  alternative: string;
 };
 
 export default function DataTable<T extends { id: number }>({
   data,
   columns,
+  alternative,
 }: DataTableProps<T>) {
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full">
+      <table className="min-w-[900px]">
         <TableHeader columns={columns} />
         <tbody>
           {data.length > 0 ? (
@@ -24,7 +26,7 @@ export default function DataTable<T extends { id: number }>({
             ))
           ) : (
             <tr>
-              <td className="p-2">کاربری یافت نشد</td>
+              <td className="p-2">{alternative}</td>
             </tr>
           )}
         </tbody>

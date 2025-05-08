@@ -2,7 +2,7 @@
 import { connectDB } from "@/lib/config/db";
 import Blog from "@/lib/models/Blog";
 import { createBlogSchema, editBlogSchema } from "@/lib/validation/blog";
-import { getChangedFields, processHtmlImages } from "@/util/form";
+import { getChangedFields, processHtmlImages, removeImages } from "@/util/form";
 import { deleteImage, uploadImage } from "@/util/upload";
 import { revalidatePath } from "next/cache";
 
@@ -158,6 +158,25 @@ export async function toggleLike(userId: string | undefined, blogId: string) {
     await Blog.findOneAndUpdate({ _id: blogId }, { $push: { likes: userId } });
     revalidatePath("/blogs/[id]", "page");
     return { message: "لایک شد", success: true };
+  } catch (e) {
+    console.log(e);
+    return { message: "مشکلی سمت سرور", success: false };
+  }
+}
+
+export async function deleteBlog(blogId: string) {
+  try {
+    await connectDB();
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return { message: "وبلاگ مورد نظر یافت نشد", success: false };
+    }
+
+    await removeImages(blog.html, blog.cover);
+    await Blog.findByIdAndDelete(blogId);
+
+    return { message: "وبلاگ مورد نظر حذف شد", success: true };
   } catch (e) {
     console.log(e);
     return { message: "مشکلی سمت سرور", success: false };

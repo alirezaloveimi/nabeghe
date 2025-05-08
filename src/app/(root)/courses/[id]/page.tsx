@@ -19,6 +19,9 @@ import { getUser } from "@/util/user";
 import { FaRegUser } from "react-icons/fa";
 import { createComment } from "@/actions/comment";
 import { getCommentById } from "@/util/comment";
+import { BsFillClockFill } from "react-icons/bs";
+import { MdInfoOutline } from "react-icons/md";
+import { FiUsers } from "react-icons/fi";
 
 type StickyCourseInfoProps = {
   isMember: boolean;
@@ -179,6 +182,12 @@ function CourseContent({ course, user, comments }: CourseContentProps) {
       </div>
 
       <div className="space-y-10 [&>div]:space-y-5 py-5">
+        <CourseFeatures
+          students={course.students.length}
+          time={course.time}
+          status={course.status}
+        />
+
         <div>
           <BulletLabel label="درباره دوره" />
 
@@ -214,6 +223,73 @@ function CourseContent({ course, user, comments }: CourseContentProps) {
           </RenderList>
         </div>
       </div>
+    </div>
+  );
+}
+
+function CourseFeatures({
+  students,
+  time,
+  status,
+}: {
+  students: number;
+  time: number;
+  status: CourseStatus;
+}) {
+  let statusContent = "";
+
+  switch (status) {
+    case "COMPLATE": {
+      statusContent = "تکمیل شده";
+      break;
+    }
+    case "PRESALE": {
+      statusContent = "پیشفروش";
+      break;
+    }
+    case "INPROGRESS": {
+      statusContent = "در حال برگزاری";
+      break;
+    }
+  }
+
+  const courseFeatures = [
+    { id: 1, title: "مدت دوره", value: time, icon: <BsFillClockFill /> },
+    {
+      id: 2,
+      title: "وضیت دوره",
+      value: statusContent,
+      icon: <MdInfoOutline />,
+    },
+    {
+      id: 3,
+      title: "تعداد شرکت کنندگان",
+      value: students,
+      icon: <FiUsers />,
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+      {courseFeatures.map((item) => (
+        <div
+          key={item.id}
+          className="flex flex-col items-center justify-center gap-3 bg-secondary border border-border rounded-2xl p-3"
+        >
+          <div className="grid-center size-12 bg-background rounded-full text-primary">
+            <span className="text-2xl">{item.icon}</span>
+          </div>
+
+          <div className="space-y-1 text-center">
+            <p className="font-bold text-xs text-muted line-clamp-1">
+              {item.title}
+            </p>
+            <p className="font-bold text-foreground line-clamp-1">
+              {item.value}
+            </p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

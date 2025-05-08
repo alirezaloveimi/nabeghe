@@ -1,11 +1,13 @@
+import { deleteBlog } from "@/actions/blog";
 import BulletLabel from "@/components/BulletLabel";
 import Button from "@/components/Button";
+import DeleteEntity from "@/components/DeleteEntity";
 import RenderList from "@/components/RenderList";
 import { connectDB } from "@/lib/config/db";
 import Blog from "@/lib/models/Blog";
 import Image from "next/image";
 import Link from "next/link";
-import { IoEye, IoPencilSharp, IoTrash } from "react-icons/io5";
+import { IoEye, IoPencilSharp } from "react-icons/io5";
 
 const getBlogs = async (): Promise<Blog[]> => {
   try {
@@ -66,12 +68,11 @@ function BlogCard({ author, cover, description, title, _id }: Blog) {
             <IoPencilSharp className="text-foreground text-lg" />
           </Link>
 
-          <button
-            // onClick={onDelete}
-            className="p-2 rounded-md border border-border hover:bg-input transition"
-          >
-            <IoTrash className="text-red-600 text-lg" />
-          </button>
+          <DeleteEntity
+            id={`${_id}`}
+            action={deleteBlog}
+            label=" آیا میخواهید وبلاگ را حذف کنید"
+          />
 
           <Link
             href={`/blogs/${_id}`}

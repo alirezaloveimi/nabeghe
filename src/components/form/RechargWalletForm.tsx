@@ -7,15 +7,18 @@ import { toast } from "react-toastify";
 
 import InputField from "../InputField";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 export default function RechargWalletForm({ id }: { id: string }) {
+  const { refresh } = useRouter();
+
   const [state, action, pending] = useActionState(
     toastCallback(rechargeWallet, {
       onError(result) {
         toast.error(result.message);
       },
       onSuccess(result) {
-        toast.success(result.message);
+        toast.success(result.message, { onClose: () => refresh() });
       },
     }),
     undefined

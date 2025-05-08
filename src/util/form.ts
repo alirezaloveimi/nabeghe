@@ -1,5 +1,5 @@
 import { toHtml } from "hast-util-to-html";
-import { uploadImage } from "./upload";
+import { deleteImage, uploadImage } from "./upload";
 import { createLowlight } from "lowlight";
 
 import css from "highlight.js/lib/languages/css";
@@ -120,4 +120,18 @@ export function decodeHTMLEntities(str: string) {
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'");
+}
+
+export async function removeImages(html: string, cover: ImageT) {
+  const removeBlogImages = extractSrcs(html);
+
+  const cleanupPaths = removeBlogImages
+    .map((str) => extractStoragePath(str))
+    .filter(Boolean) as string[];
+
+  cleanupPaths.push(cover.path);
+
+  for (const path of cleanupPaths) {
+    await deleteImage(path);
+  }
 }

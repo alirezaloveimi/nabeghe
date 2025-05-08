@@ -3,15 +3,19 @@ import Link from "next/link";
 
 import { connectDB } from "@/lib/config/db";
 import Teacher from "@/lib/models/Teacher";
+import "@/lib/models/Course";
 
 import BulletLabel from "@/components/BulletLabel";
 import Button from "@/components/Button";
 import RenderList from "@/components/RenderList";
+import SeeTeacherCourses from "@/components/SeeTeacherCourses";
 
 const getTeachers = async (): Promise<Teacher[]> => {
   try {
     await connectDB();
-    const teachers = await Teacher.find({}).sort({ createdAt: -1 });
+    const teachers = await Teacher.find({})
+      .populate({ path: "courses", model: "Course" })
+      .sort({ createdAt: -1 });
     return teachers;
   } catch (e) {
     console.log(e);
@@ -74,13 +78,15 @@ function TeacherCard({ about, courses, image, name, title, _id }: Teacher) {
         {courses.length} دوره
       </div>
 
-      <div className="w-full flex flex-col mt-6">
+      <div className="w-full mt-6 flex flex-col md:flex-row [&>*]:flex-1 gap-3">
         <Link
           href={`/p-admin/teachers/${_id}`}
           className="text-center py-2 text-sm rounded-md border border-border hover:bg-input transition"
         >
           ویرایش
         </Link>
+
+        <SeeTeacherCourses courses={courses} />
       </div>
     </div>
   );

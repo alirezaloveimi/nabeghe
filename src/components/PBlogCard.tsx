@@ -1,8 +1,11 @@
 import Image from "next/image";
-import { FaHeart } from "react-icons/fa";
-import Button from "./Button";
 import Link from "next/link";
-import { IoEye, IoPencilSharp, IoTrash } from "react-icons/io5";
+import Button from "./Button";
+import DeleteEntity from "./DeleteEntity";
+
+import { FaHeart } from "react-icons/fa";
+import { IoEye, IoPencilSharp } from "react-icons/io5";
+import { deleteBlog } from "@/actions/blog";
 
 const PBlogCard = ({
   _id,
@@ -54,9 +57,11 @@ const PBlogCard = ({
               <IoEye className="text-foreground text-lg" />
             </Link>
 
-            <button className="p-2 rounded-md border border-border hover:bg-input transition">
-              <IoTrash className="text-red-600 text-lg" />
-            </button>
+            <DeleteEntity
+              id={`${_id}`}
+              action={deleteBlog}
+              label=" آیا میخواهید وبلاگ را حذف کنید"
+            />
           </div>
         ) : (
           <Button href={`/blogs/${_id}`} isLink>

@@ -1,5 +1,6 @@
 type Role = "ADMIN" | "USER";
 type EntityType = "Blog" | "Course";
+type CourseStatus = "PRESALE" | "COMPLATE" | "INPROGRESS";
 
 type ImageT = {
   path: string;

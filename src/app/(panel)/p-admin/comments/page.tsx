@@ -31,7 +31,7 @@ export default async function PAdminCommentsPage() {
   return (
     <div className="space-y-8">
       <BulletLabel label="مدیریت نظرات" />
-      <DataTable data={data} columns={commentcolumns} />
+      <DataTable alternative="کامنتی یافت نشد" data={data} columns={commentcolumns} />
     </div>
   );
 }

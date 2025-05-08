@@ -15,12 +15,13 @@ export default async function PAdminProfilePage() {
   return (
     <div className="space-y-8">
       <div className="space-y-4">
+        <BulletLabel label="عکس پروفایل" />
+
         <Profile
           model="USER"
           userId={`${user._id}`}
           defaultImg={user.image?.url || "/images/user-no-image.png"}
         />
-        <BulletLabel label="عکس پروفایل" />
       </div>
 
       <div className="space-y-4">

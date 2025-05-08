@@ -5,7 +5,7 @@ import Teacher from "@/lib/models/Teacher";
 import User from "@/lib/models/User";
 
 import { createCourseSchema, editCourseSchema } from "@/lib/validation/course";
-import { getChangedFields, processHtmlImages } from "@/util/form";
+import { getChangedFields, processHtmlImages, removeImages } from "@/util/form";
 import { deleteImage, uploadImage } from "@/util/upload";
 import { revalidatePath } from "next/cache";
 
@@ -166,7 +166,7 @@ export async function editCourse(_: unknown, formData: FormData, id: string) {
   return { success: true, message: "دوره با موفقیت آپدیت شد" };
 }
 
-export const registerToCourse = async (userId: string, cartPrice: number) => {
+export async function registerToCourse(userId: string, cartPrice: number) {
   try {
     await connectDB();
     const user = await User.findById(userId);
@@ -198,4 +198,30 @@ export const registerToCourse = async (userId: string, cartPrice: number) => {
   }
 
   return { success: true, message: "خرید شما با موفقیت انجام شد" };
-};
+}
+
+export async function deleteCourse(courseId: string) {
+  try {
+    await connectDB();
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return { message: "دوره مورد نظر یافت نشد", success: false };
+    }
+
+    await User.updateMany({ cart: courseId }, { $pull: { cart: courseId } });
+
+    await Teacher.updateOne(
+      { courses: courseId },
+      { $pull: { courses: courseId } }
+    );
+
+    await removeImages(course.html, course.cover);
+    await Course.findByIdAndDelete(courseId);
+
+    return { message: "دوره مورد نظر حذف شد", success: true };
+  } catch (e) {
+    console.log(e);
+    return { message: "خطای سرور", success: false };
+  }
+}

@@ -41,5 +41,11 @@ export default async function UserTable({ search }: { search: string }) {
     action: user._id,
   }));
 
-  return <DataTable data={usersData} columns={userscolumns} />;
+  return (
+    <DataTable
+      alternative="کاربری یافت نشد"
+      data={usersData}
+      columns={userscolumns}
+    />
+  );
 }

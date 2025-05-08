@@ -69,13 +69,12 @@ export async function rechargeWallet(_: unknown, formData: FormData) {
     const user = await User.findById(id);
     user.wallet = user.wallet + price;
     user.save();
+
+    return { success: true, message: "مبلغ مورد نظر به کیف پول اضافه شد" };
   } catch (e) {
     console.log(e);
     return { success: false, message: "مشکل سمت سرور" };
   }
-
-  revalidatePath("/p-user/wallet");
-  return { success: true, message: "مبلغ مورد نظر به کیف پول اضافه شد" };
 }
 
 export async function addToCart(userId: string, courseId: string) {
