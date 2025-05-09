@@ -81,7 +81,7 @@ export default async function BlogPage({
           <div className="space-y-10 [&>div]:space-y-5 py-5">
             <div>
               <div
-                className="prose prose-lg dark:prose-invert max-w-none [&>img]:rounded-3xl [&>img]:!cursor-default"
+                className="prose prose-lg dark:prose-invert max-w-none [&>img]:rounded-3xl [&>img]:shadow [&>img]:!cursor-default"
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(html),
                 }}

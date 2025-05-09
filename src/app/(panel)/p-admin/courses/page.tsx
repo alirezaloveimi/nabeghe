@@ -26,7 +26,7 @@ export default async function PAdminCoursesPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex-between-center">
+      <div className="flex flex-col gap-3 justify-between md:flex-row [&>a]:self-end">
         <BulletLabel label={`تمامی دوره های وبسایت (${courses.length})`} />
         <Button width={180} isLink href="/p-admin/courses/add">
           اضافه کردن دوره جدید

@@ -26,13 +26,14 @@ export default function CommentsSlider({ comments }: { comments: CommentT[] }) {
               </div>
 
               <div className="flex-align-center gap-x-6">
-                <Image
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                  src={comment.user.image?.url || "/images/user-no-image.png"}
-                  alt={comment.user.fullname}
-                />
+                <div className="relative size-14">
+                  <Image
+                    fill
+                    className="rounded-full"
+                    src={comment.user.image?.url || "/images/user-no-image.png"}
+                    alt={comment.user.fullname}
+                  />
+                </div>
 
                 <div className="space-y-1">
                   <p>{comment.user.fullname}</p>

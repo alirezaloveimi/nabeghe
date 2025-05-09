@@ -26,7 +26,7 @@ const getTeachers = async (): Promise<Teacher[]> => {
 export default function PAdminTeachersPage() {
   return (
     <div className="space-y-8">
-      <div className="flex-between-center">
+      <div className="flex flex-col gap-3 justify-between md:flex-row [&>a]:self-end">
         <BulletLabel label="تمامی استاد های وبسایت" />
         <Button width={180} isLink href="/p-admin/teachers/add">
           اضافه کردن استاد جدید

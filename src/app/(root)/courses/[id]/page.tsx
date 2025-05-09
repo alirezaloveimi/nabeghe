@@ -192,7 +192,7 @@ function CourseContent({ course, user, comments }: CourseContentProps) {
           <BulletLabel label="درباره دوره" />
 
           <div
-            className="prose prose-lg dark:prose-invert max-w-none [&>img]:rounded-3xl [&>img]:!cursor-default"
+            className="prose prose-lg dark:prose-invert max-w-none [&>img]:rounded-3xl [&>img]:shadow [&>img]:!cursor-default"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(course.html),
             }}

@@ -18,7 +18,7 @@ const getFiltredCourse = async (
   try {
     await connectDB();
     const courses = await Course.find({})
-      .sort({ updatedAt: -1 })
+      .sort({ createdAt: -1 })
       .populate("teacher")
       .populate("category", "title name");
 

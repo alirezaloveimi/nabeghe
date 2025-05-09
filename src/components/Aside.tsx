@@ -19,14 +19,15 @@ export default async function Aside() {
   return (
     <aside className="lg:col-span-4 xl:col-span-3 md:sticky md:top-24">
       <div className="flex-align-center gap-x-3 mb-5">
-        <Image
-          priority={true}
-          src={user?.image?.url || "/images/user-no-image.png"}
-          alt="user-image"
-          width={40}
-          height={40}
-          className="rounded-full object-cover flex-shrink-0"
-        />
+        <div className="size-10 relative flex-shrink-0">
+          <Image
+            fill
+            priority={true}
+            src={user?.image?.url || "/images/user-no-image.png"}
+            alt="user-image"
+            className="rounded-full object-cover"
+          />
+        </div>
 
         <div className="flex flex-col space-y-1">
           <span className="text-xs text-muted">خوش آمدید</span>

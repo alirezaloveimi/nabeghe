@@ -68,13 +68,14 @@ export default async function PAdminUserPage({
   return (
     <div className="space-y-8">
       <div className="grid-center p-4 border border-border rounded-xl space-y-2">
-        <Image
-          width={64}
-          height={64}
-          src={user.image?.url ?? "/images/user-no-image.png"}
-          alt="user-profile-image"
-          className="rounded-full mx-auto"
-        />
+        <div className="relative size-16 mx-auto">
+          <Image
+            fill
+            src={user.image?.url ?? "/images/user-no-image.png"}
+            alt="user-profile-image"
+            className="rounded-full"
+          />
+        </div>
         <div className="text-center">
           <h2 className="text-xl font-bold">{user.fullname}</h2>
           <p className="text-gray-500 text-sm">

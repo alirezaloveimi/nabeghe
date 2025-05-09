@@ -23,8 +23,9 @@ const getBlogs = async (): Promise<Blog[]> => {
 export default function PAdminBlogsPage() {
   return (
     <div className="space-y-8">
-      <div className="flex-between-center">
+      <div className="flex flex-col gap-3 justify-between md:flex-row [&>a]:self-end">
         <BulletLabel label="وبلاگ های وبسایت" />
+
         <Button width={180} isLink href="/p-admin/blogs/add">
           اضافه کردن وبلاگ جدید
         </Button>
