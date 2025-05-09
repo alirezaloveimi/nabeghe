@@ -181,46 +181,48 @@ function CourseContent({ course, user, comments }: CourseContentProps) {
         </p>
       </div>
 
-      <div className="space-y-10 [&>div]:space-y-5 py-5">
+      <div className="space-y-10 py-5">
         <CourseFeatures
           students={course.students.length}
           time={course.time}
           status={course.status}
         />
 
-        <div>
-          <BulletLabel label="درباره دوره" />
+        <div className="[&>div]:space-y-5">
+          <div>
+            <BulletLabel label="درباره دوره" />
 
-          <div
-            className="prose prose-lg dark:prose-invert max-w-none [&>img]:rounded-3xl [&>img]:shadow [&>img]:!cursor-default"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(course.html),
-            }}
-          />
-        </div>
+            <div
+              className="prose prose-lg dark:prose-invert max-w-none [&>img]:rounded-3xl [&>img]:shadow [&>img]:!cursor-default"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(course.html),
+              }}
+            />
+          </div>
 
-        <div>
-          <BulletLabel label="جلسات دوره" />
-          <div className="bg-secondary h-60"></div>
-        </div>
+          <div>
+            <BulletLabel label="جلسات دوره" />
+            <div className="bg-secondary h-60"></div>
+          </div>
 
-        <div>
-          <AddComment
-            entityType="Course"
-            user={JSON.parse(JSON.stringify(user))}
-            id={`${course._id}`}
-            action={createComment}
-          />
+          <div>
+            <AddComment
+              entityType="Course"
+              user={JSON.parse(JSON.stringify(user))}
+              id={`${course._id}`}
+              action={createComment}
+            />
 
-          <RenderList alternative="کامنتی ثبت نشده" items={comments}>
-            {comments.map((comment) => (
-              <Comment
-                key={comment._id}
-                comment={comment}
-                students={course.students}
-              />
-            ))}
-          </RenderList>
+            <RenderList alternative="کامنتی ثبت نشده" items={comments}>
+              {comments.map((comment) => (
+                <Comment
+                  key={comment._id}
+                  comment={comment}
+                  students={course.students}
+                />
+              ))}
+            </RenderList>
+          </div>
         </div>
       </div>
     </div>

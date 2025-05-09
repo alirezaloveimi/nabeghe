@@ -19,7 +19,11 @@ export default function AddToCart({ courseId, userId }: AddToCartProps) {
     const params = new URLSearchParams(searchParams);
     params.set("r", redirectPath);
 
-    replace(`/register-login?${params.toString()}`);
+    toast.error("باید در سایت ثبت نام کنید", {
+      onClose: () => {
+        replace(`/register-login?${params.toString()}`);
+      },
+    });
   };
 
   const addToCartHandler = async (userId: string) => {

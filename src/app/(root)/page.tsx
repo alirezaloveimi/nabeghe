@@ -22,7 +22,7 @@ const getLastCourses = async (): Promise<Course[]> => {
     await connectDB();
     const courses = await Course.find()
       .limit(6)
-      .sort({ updatedAt: -1 })
+      .sort({ createdAt: -1 })
       .populate("teacher")
       .populate("category", "title name");
 
