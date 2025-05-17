@@ -35,7 +35,7 @@ export default function CourseCard({ course }: { course: Course }) {
       <div className="bg-background rounded-b-3xl -mt-12 pt-12">
         <div className="bg-gradient-to-b from-background to-secondary rounded-b-3xl space-y-2 p-5 mx-5">
           <Link
-            href={`/course/${_id}`}
+            href={`/courses/${_id}`}
             className="font-bold text-sm line-clamp-1 text-foreground transition-colors hover:text-primary"
           >
             {title}

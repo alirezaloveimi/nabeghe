@@ -40,6 +40,7 @@ const getLastComments = async (): Promise<CommentT[]> => {
       isAnswer: false,
       isAccept: true,
     })
+      .sort({ createdAt: 1 })
       .limit(2)
       .populate(["user", "entityId"]);
 
