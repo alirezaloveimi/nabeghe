@@ -22,7 +22,7 @@ export default function PhoneInput() {
       onSuccess(result) {
         toast.success(result.message, {
           onClose: () => {
-            toggleOtpSignup(true, result.expTime);
+            toggleOtpSignup(true, result.expTime, String(result.code));
           },
         });
       },

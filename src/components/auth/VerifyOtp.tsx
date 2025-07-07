@@ -24,6 +24,7 @@ export default function VerifyOtp() {
     phone,
     otp,
     updateOtp,
+    generatedOtp,
   } = useAuth();
 
   const [state, action, pending] = useActionState(
@@ -92,6 +93,12 @@ export default function VerifyOtp() {
           تایید
         </Button>
       </form>
+
+      {generatedOtp && (
+        <p className="font-black text-center select-none">
+          OTP : {generatedOtp}
+        </p>
+      )}
     </div>
   );
 }

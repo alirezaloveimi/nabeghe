@@ -9,6 +9,7 @@ export type UserInfo = {
 
 type AuthContextType = {
   otp: string[];
+  generatedOtp?: string;
   showOtp: boolean;
   timer: string;
   phone: string;
@@ -18,8 +19,8 @@ type AuthContextType = {
   updateUserInfo: (name: string, value: string) => void;
   updateOtp: (newOtp: string[]) => void;
   toggleUserForm: (show: boolean) => void;
-  toggleOtpSignup: (show: boolean, time?: number) => void;
-  toggleOtpLogin: (show: boolean, time?: number) => void;
+  toggleOtpSignup: (show: boolean, time?: number, code?: string) => void;
+  toggleOtpLogin: (show: boolean, time?: number, code?: string) => void;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -30,6 +31,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const [expTime, setExpTime] = useState<number>(0);
+  const [generatedOtp, setGeneratedOtp] = useState<string | undefined>();
 
   const [showOtp, setShowOtp] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
@@ -72,23 +74,30 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
     }
   };
 
-  const toggleOtpSignup = (show: boolean, time?: number) => {
+  const toggleOtpSignup = (show: boolean, time?: number, code?: string) => {
     setShowOtp(show);
     setIsNewUser(!show);
     setOtp(Array(OTP_LENGTH).fill(""));
-    if (show && time) setExpTime(time);
+    if (show && time && code) {
+      setExpTime(time);
+      setGeneratedOtp(code);
+    }
   };
 
-  const toggleOtpLogin = (show: boolean, time?: number) => {
+  const toggleOtpLogin = (show: boolean, time?: number, code?: string) => {
     setShowOtp(show);
     setIsNewUser(false);
     setOtp(Array(OTP_LENGTH).fill(""));
-    if (show && time) setExpTime(time);
+    if (show && time && code) {
+      setExpTime(time);
+      setGeneratedOtp(code);
+    }
   };
 
   return (
     <AuthContext.Provider
       value={{
+        generatedOtp,
         phone,
         showOtp,
         isNewUser,

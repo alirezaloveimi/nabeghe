@@ -17,7 +17,7 @@ export default function Alert({
           {icon}
         </span>
       )}
-      <span className="text-muted">{children}</span>
+      <span className="text-muted text-sm md:text-base">{children}</span>
     </div>
   );
 }

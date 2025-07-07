@@ -12,9 +12,7 @@ import Otp from "@/lib/models/Otp";
 import User, { Role } from "@/lib/models/User";
 import { redirect } from "next/navigation";
 
-async function sendOtp(
-  phone: string
-): Promise<{ expTime: number; message?: string } | undefined> {
+async function sendOtp(phone: string) {
   const now = Date.now();
   const expTime = now + 60_000;
 
@@ -25,37 +23,15 @@ async function sendOtp(
 
     if (notExpired) {
       return {
-        expTime: notExpired.expTime,
+        expTime: notExpired.expTime as number,
         message: "کد قبلی هنوز منقضی نشده",
+        code: notExpired.code as number,
       };
     }
 
     const code = Math.floor(10000 + Math.random() * 90000);
-    const otpBodyOptions = JSON.stringify({
-      op: "pattern",
-      user: process.env.FARAZ_SMS_USER,
-      pass: process.env.FARAZ_SMS_PASSWORD,
-      fromNum: "3000505",
-      toNum: phone,
-      patternCode: "55omy5a2fy8zjaj",
-      inputData: [{ "verification-code": code }],
-    });
-
-    const sendOtpRes = await fetch("http://ippanel.com/api/select", {
-      method: "POST",
-      body: otpBodyOptions,
-    });
-
-    if (!sendOtpRes.ok && sendOtpRes.status !== 200) {
-      const errorText = await sendOtpRes.text();
-
-      throw new Error(
-        `Failed to send OTP. Status: ${sendOtpRes.status}, Error: ${errorText}`
-      );
-    }
-
     await Otp.create({ phone, code, expTime });
-    return { expTime };
+    return { expTime, code };
   } catch (e) {
     console.log(e);
   }
@@ -105,6 +81,7 @@ export async function sendOtpLogin(_: unknown, formData: FormData) {
         success: true,
         message: otpResult.message,
         expTime: otpResult.expTime,
+        code: otpResult.code,
       };
     }
 
@@ -112,6 +89,7 @@ export async function sendOtpLogin(_: unknown, formData: FormData) {
       success: true,
       message: "کد با موفقیت ارسال شد",
       expTime: otpResult.expTime,
+      code: otpResult.code,
     };
   } catch (e) {
     console.log(e);
@@ -165,6 +143,7 @@ export async function sendOtpRegister(_: unknown, formData: FormData) {
         success: true,
         message: otpResult.message,
         expTime: otpResult.expTime,
+        code: otpResult.code,
       };
     }
 
@@ -172,6 +151,7 @@ export async function sendOtpRegister(_: unknown, formData: FormData) {
       success: true,
       message: "کد با موفقیت ارسال شد",
       expTime: otpResult.expTime,
+      code: otpResult.code,
     };
   } catch (e) {
     console.log(e);
